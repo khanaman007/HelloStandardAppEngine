@@ -37,3 +37,11 @@ jobs:
     # - name: Test with pytest
       # run: |
         # pytest
+    - name: Set up Google Cloud credentials service account
+      uses: google-github-actions/auth@v1
+      with:
+        credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+    - name: Deploy to Google Cloud App Engine
+      run: |
+          gcloud app browse || true  # Just to ensure App Engine is up
+          gcloud app deploy --quiet  # Deploy to App Engine 
